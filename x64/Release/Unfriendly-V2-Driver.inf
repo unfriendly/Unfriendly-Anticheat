@@ -1,0 +1,89 @@
+;
+; Unfriendly-V2-Driver.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=SoftwareComponent
+ClassGuid={5c4c3332-344d-483c-8739-259e934c9cc8}
+Provider=%ManufacturerName%
+CatalogFile=Unfriendly-V2-Driver.cat
+DriverVer = 01/28/2019,18.14.28.464
+
+[DestinationDirs]
+DefaultDestDir = 12
+Unfriendly-V2-Driver_Device_CoInstaller_CopyFiles = 11
+
+; ================= Class section =====================
+
+[ClassInstall32]
+Addreg=SampleClassReg
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+Unfriendly-V2-Driver.sys  = 1,,
+;
+
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%Unfriendly-V2-Driver.DeviceDesc%=Unfriendly-V2-Driver_Device, Root\Unfriendly-V2-Driver ; TODO: edit hw-id
+
+[Unfriendly-V2-Driver_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+Unfriendly-V2-Driver.sys
+
+;-------------- Service installation
+[Unfriendly-V2-Driver_Device.NT.Services]
+AddService = Unfriendly-V2-Driver,%SPSVCINST_ASSOCSERVICE%, Unfriendly-V2-Driver_Service_Inst
+
+; -------------- Unfriendly-V2-Driver driver install sections
+[Unfriendly-V2-Driver_Service_Inst]
+DisplayName    = %Unfriendly-V2-Driver.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\Unfriendly-V2-Driver.sys
+
+;
+;--- Unfriendly-V2-Driver_Device Coinstaller installation ------
+;
+
+[Unfriendly-V2-Driver_Device.NT.CoInstallers]
+AddReg=Unfriendly-V2-Driver_Device_CoInstaller_AddReg
+CopyFiles=Unfriendly-V2-Driver_Device_CoInstaller_CopyFiles
+
+[Unfriendly-V2-Driver_Device_CoInstaller_AddReg]
+;
+
+
+[Unfriendly-V2-Driver_Device_CoInstaller_CopyFiles]
+;
+
+
+[Unfriendly-V2-Driver_Device.NT.Wdf]
+KmdfService =  Unfriendly-V2-Driver, Unfriendly-V2-Driver_wdfsect
+[Unfriendly-V2-Driver_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="BYTE, INC"
+ClassName="SoftwareComponent"
+DiskName = "Unfriendly Anti-cheat Driver Installation"
+Unfriendly-V2-Driver.DeviceDesc = "Unfriendly Driver Device"
+Unfriendly-V2-Driver.SVCDESC = "Unfriendly Driver Service"

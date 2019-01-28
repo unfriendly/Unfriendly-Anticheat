@@ -1,0 +1,5 @@
+﻿  Building 'Unfriendly-V2-Driver' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  Stamping x64\Release\Unfriendly-V2-Driver.inf
+  Stamping [Version] section with DriverVer=01/28/2019,18.14.28.464
+  Unfriendly-V2-Driver.vcxproj -> G:\FPS\Unfriendly-AC\Unfriendly-Anticheat\x64\Release\Unfriendly-V2-Driver.sys
+  Driver is a Universal Driver.
